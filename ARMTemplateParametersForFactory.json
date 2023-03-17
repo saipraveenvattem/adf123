@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "value": "roshni123"
+        },
+        "Ls_azure_sql_connectionString": {
+            "value": ""
+        },
+        "Ls_blobstorage_source_connectionString": {
+            "value": ""
+        },
+        "Ls_EMP_AzureSqlDatabase1_connectionString": {
+            "value": ""
+        },
+        "LS_SCD_2_connectionString": {
+            "value": ""
+        },
+        "AzureBlobStorage1_connectionString": {
+            "value": ""
+        },
+        "AzureSqlDatabase1_connectionString": {
+            "value": ""
+        },
+        "LS_blobstorage_adftraining_connectionString": {
+            "value": ""
+        },
+        "ls_Json_Api_properties_typeProperties_url": {
+            "value": "https://gbfs.citibikenyc.com/gbfs/en/station_information.json"
+        }
+    }
+}
