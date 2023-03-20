@@ -20,21 +20,27 @@
 		},
 		"schema": [
 			{
+				"name": "EmpID",
 				"type": "String"
 			},
 			{
+				"name": "EmpName",
 				"type": "String"
 			},
 			{
+				"name": "DOJ",
 				"type": "String"
 			},
 			{
+				"name": "Effective Start Date",
 				"type": "String"
 			},
 			{
+				"name": "EffectiveEndDate",
 				"type": "String"
 			},
 			{
+				"name": "Salary",
 				"type": "String"
 			}
 		]
