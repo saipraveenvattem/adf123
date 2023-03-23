@@ -1,0 +1,69 @@
+{
+	"name": "dataflow_blob_sql",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_blob_source_csv",
+						"type": "DatasetReference"
+					},
+					"name": "dataflowsource"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_Sqlserver_dbo_source",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          EmpID as integer,",
+				"          EmpName as string,",
+				"          DOJ as date,",
+				"          {Effective Start Date} as date,",
+				"          EffectiveEndDate as date,",
+				"          Salary as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> dataflowsource",
+				"dataflowsource select(mapColumn(",
+				"          Employee_ID = EmpID,",
+				"          Employee_Name = EmpName,",
+				"          birthdate = DOJ,",
+				"          Effective_Start_Date = {Effective Start Date},",
+				"          EffectiveEndDate,",
+				"          Salary",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 derive(Month = month(birthdate)) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     recreate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}
