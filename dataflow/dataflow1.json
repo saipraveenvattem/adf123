@@ -10,12 +10,22 @@
 						"type": "DatasetReference"
 					},
 					"name": "dataflowsource"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Bloblstorage_Product",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
 				}
 			],
 			"sinks": [],
 			"transformations": [
 				{
 					"name": "select1"
+				},
+				{
+					"name": "join1"
 				}
 			],
 			"scriptLines": [
@@ -30,6 +40,9 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> dataflowsource",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
 				"dataflowsource select(mapColumn(",
 				"          Employee_ID = EmpID,",
 				"          Employee_Name = EmpName,",
@@ -39,7 +52,12 @@
 				"          Salary",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1"
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"dataflowsource, select1 join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1"
 			]
 		}
 	}
