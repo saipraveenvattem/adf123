@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "dataflow_blob_sql",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
