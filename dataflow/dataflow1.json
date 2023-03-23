@@ -13,7 +13,11 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "select1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          EmpID as integer,",
@@ -25,7 +29,17 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> dataflowsource"
+				"     ignoreNoFilesFound: false) ~> dataflowsource",
+				"dataflowsource select(mapColumn(",
+				"          Employee_ID = EmpID,",
+				"          Employee_Name = EmpName,",
+				"          birthdate = DOJ,",
+				"          Effective_Start_Date = {Effective Start Date},",
+				"          EffectiveEndDate,",
+				"          Salary",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1"
 			]
 		}
 	}
