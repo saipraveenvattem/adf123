@@ -9,7 +9,7 @@
 						"referenceName": "ds_blob_source_csv",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "dataflowsource"
 				}
 			],
 			"sinks": [],
@@ -25,7 +25,7 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1"
+				"     ignoreNoFilesFound: false) ~> dataflowsource"
 			]
 		}
 	}
