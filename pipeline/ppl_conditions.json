@@ -112,9 +112,9 @@
 															"ordinal": 1
 														},
 														"sink": {
-															"name": "Employee_ID",
-															"type": "Int32",
-															"physicalType": "int"
+															"name": "Column1",
+															"type": "String",
+															"physicalType": "String"
 														}
 													},
 													{
@@ -123,9 +123,9 @@
 															"ordinal": 2
 														},
 														"sink": {
-															"name": "Employee_Name",
+															"name": "Column2",
 															"type": "String",
-															"physicalType": "nvarchar"
+															"physicalType": "String"
 														}
 													},
 													{
@@ -134,9 +134,9 @@
 															"ordinal": 3
 														},
 														"sink": {
-															"name": "birthdate",
-															"type": "DateTime",
-															"physicalType": "date"
+															"name": "Column3",
+															"type": "String",
+															"physicalType": "String"
 														}
 													},
 													{
@@ -145,9 +145,9 @@
 															"ordinal": 4
 														},
 														"sink": {
-															"name": "Effective_Start_Date",
-															"type": "DateTime",
-															"physicalType": "date"
+															"name": "Column4",
+															"type": "String",
+															"physicalType": "String"
 														}
 													},
 													{
@@ -156,9 +156,9 @@
 															"ordinal": 5
 														},
 														"sink": {
-															"name": "EffectiveEndDate",
-															"type": "DateTime",
-															"physicalType": "date"
+															"name": "Column5",
+															"type": "String",
+															"physicalType": "String"
 														}
 													},
 													{
@@ -167,9 +167,9 @@
 															"ordinal": 6
 														},
 														"sink": {
-															"name": "Salary",
-															"type": "Int32",
-															"physicalType": "int"
+															"name": "Column6",
+															"type": "String",
+															"physicalType": "String"
 														}
 													},
 													{
@@ -178,9 +178,119 @@
 															"ordinal": 7
 														},
 														"sink": {
-															"name": "Month",
-															"type": "Int32",
-															"physicalType": "int"
+															"name": "Column7",
+															"type": "String",
+															"physicalType": "String"
+														}
+													},
+													{
+														"source": {
+															"type": "String",
+															"ordinal": 8
+														},
+														"sink": {
+															"name": "Column8",
+															"type": "String",
+															"physicalType": "String"
+														}
+													},
+													{
+														"source": {
+															"type": "String",
+															"ordinal": 9
+														},
+														"sink": {
+															"name": "Column9",
+															"type": "String",
+															"physicalType": "String"
+														}
+													},
+													{
+														"source": {
+															"type": "String",
+															"ordinal": 10
+														},
+														"sink": {
+															"name": "Column10",
+															"type": "String",
+															"physicalType": "String"
+														}
+													},
+													{
+														"source": {
+															"type": "String",
+															"ordinal": 11
+														},
+														"sink": {
+															"name": "Column11",
+															"type": "String",
+															"physicalType": "String"
+														}
+													},
+													{
+														"source": {
+															"type": "String",
+															"ordinal": 12
+														},
+														"sink": {
+															"name": "Column12",
+															"type": "String",
+															"physicalType": "String"
+														}
+													},
+													{
+														"source": {
+															"type": "String",
+															"ordinal": 13
+														},
+														"sink": {
+															"name": "Column13",
+															"type": "String",
+															"physicalType": "String"
+														}
+													},
+													{
+														"source": {
+															"type": "String",
+															"ordinal": 14
+														},
+														"sink": {
+															"name": "Column14",
+															"type": "String",
+															"physicalType": "String"
+														}
+													},
+													{
+														"source": {
+															"type": "String",
+															"ordinal": 15
+														},
+														"sink": {
+															"name": "Column15",
+															"type": "String",
+															"physicalType": "String"
+														}
+													},
+													{
+														"source": {
+															"type": "String",
+															"ordinal": 16
+														},
+														"sink": {
+															"name": "Column16",
+															"type": "String",
+															"physicalType": "String"
+														}
+													},
+													{
+														"source": {
+															"type": "String",
+															"ordinal": 17
+														},
+														"sink": {
+															"name": "Column17",
+															"type": "String",
+															"physicalType": "String"
 														}
 													}
 												],
@@ -199,7 +309,7 @@
 										],
 										"outputs": [
 											{
-												"referenceName": "DS_Sqlserver_dbo_source",
+												"referenceName": "sql_product_table",
 												"type": "DatasetReference"
 											}
 										]
