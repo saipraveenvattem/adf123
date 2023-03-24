@@ -1,0 +1,184 @@
+{
+	"name": "SCD-2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "source_csv_blobstorage",
+						"type": "DatasetReference"
+					},
+					"name": "empsrc"
+				},
+				{
+					"dataset": {
+						"referenceName": "desti_AzureSql_Emp_SCD_2",
+						"type": "DatasetReference"
+					},
+					"name": "srcSCD2"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "desti_AzureSql_Emp_SCD_2",
+						"type": "DatasetReference"
+					},
+					"name": "destinationEmp"
+				},
+				{
+					"dataset": {
+						"referenceName": "desti_AzureSql_Emp_SCD_2",
+						"type": "DatasetReference"
+					},
+					"name": "updateSink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "IaActive"
+				},
+				{
+					"name": "Comparing"
+				},
+				{
+					"name": "lookup1"
+				},
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "alterRow1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          EmpID as integer,",
+				"          EmpName as string,",
+				"          DOJ as date,",
+				"          {Effective Start Date} as date,",
+				"          EffectiveEndDate as date,",
+				"          Salary as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> empsrc",
+				"source(output(",
+				"          surrkey as integer,",
+				"          EmpID as integer,",
+				"          EmpName as string,",
+				"          DOJ as date,",
+				"          EffectiveStartDate as date,",
+				"          EffectiveEndDatedate as date,",
+				"          Salary as integer,",
+				"          isActive as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> srcSCD2",
+				"empsrc derive(isActive = 1) ~> IaActive",
+				"srcSCD2 select(mapColumn(",
+				"          SQL_surrkey = surrkey,",
+				"          SQL_EmpID = EmpID,",
+				"          SQL_EmpName = EmpName,",
+				"          SQL_DOJ = DOJ,",
+				"          SQL_EffectiveStartDate = EffectiveStartDate,",
+				"          SQL_EffectiveEndDatedate = EffectiveEndDatedate,",
+				"          SQL_Salary = Salary,",
+				"          SQL_isActive = isActive",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Comparing",
+				"empsrc, Comparing lookup(EmpID == SQL_EmpID,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1 filter(!isNull(SQL_EmpID)) ~> filter1",
+				"filter1 derive(SQL_isActive = 0) ~> derivedColumn1",
+				"derivedColumn1 select(mapColumn(",
+				"          SQL_surrkey,",
+				"          SQL_EmpID,",
+				"          SQL_EmpName,",
+				"          SQL_DOJ,",
+				"          SQL_EffectiveStartDate,",
+				"          SQL_EffectiveEndDatedate,",
+				"          SQL_Salary,",
+				"          SQL_isActive",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 alterRow(updateIf(true())) ~> alterRow1",
+				"IaActive sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          surrkey as integer,",
+				"          EmpID as integer,",
+				"          EmpName as string,",
+				"          DOJ as date,",
+				"          EffectiveStartDate as date,",
+				"          EffectiveEndDatedate as date,",
+				"          Salary as integer,",
+				"          isActive as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 2,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          EmpID,",
+				"          EmpName,",
+				"          DOJ,",
+				"          EffectiveStartDate = {Effective Start Date},",
+				"          EffectiveEndDatedate = {Effective Start Date},",
+				"          Salary,",
+				"          isActive",
+				"     )) ~> destinationEmp",
+				"alterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          surrkey as integer,",
+				"          EmpID as integer,",
+				"          EmpName as string,",
+				"          DOJ as date,",
+				"          EffectiveStartDate as date,",
+				"          EffectiveEndDatedate as date,",
+				"          Salary as integer,",
+				"          isActive as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:true,",
+				"     upsertable:false,",
+				"     keys:['surrkey'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     saveOrder: 1,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          surrkey = SQL_surrkey,",
+				"          EmpID = SQL_EmpID,",
+				"          EmpName = SQL_EmpName,",
+				"          DOJ = SQL_DOJ,",
+				"          EffectiveStartDate = SQL_EffectiveStartDate,",
+				"          EffectiveEndDatedate = SQL_EffectiveEndDatedate,",
+				"          Salary = SQL_Salary,",
+				"          isActive = SQL_isActive",
+				"     )) ~> updateSink"
+			]
+		}
+	}
+}

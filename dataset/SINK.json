@@ -1,0 +1,23 @@
+{
+	"name": "SINK",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Ls_blobstorage_source",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "EMP.csv",
+				"container": "sourceinput"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,44 @@
+{
+	"name": "dimen_AzureSqlTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Ls_EMP_AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "EmpID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "EmpName",
+				"type": "varchar"
+			},
+			{
+				"name": "DOJ",
+				"type": "date"
+			},
+			{
+				"name": "EffectiveStartDate",
+				"type": "date"
+			},
+			{
+				"name": "EffectiveEndDatedate",
+				"type": "date"
+			},
+			{
+				"name": "Salary",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Emp_SCD_1"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

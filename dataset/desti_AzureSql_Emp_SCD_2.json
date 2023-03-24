@@ -1,0 +1,54 @@
+{
+	"name": "desti_AzureSql_Emp_SCD_2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SCD_2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "surrkey",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "EmpID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "EmpName",
+				"type": "varchar"
+			},
+			{
+				"name": "DOJ",
+				"type": "date"
+			},
+			{
+				"name": "EffectiveStartDate",
+				"type": "date"
+			},
+			{
+				"name": "EffectiveEndDatedate",
+				"type": "date"
+			},
+			{
+				"name": "Salary",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "isActive",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Emp_SCD_2"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

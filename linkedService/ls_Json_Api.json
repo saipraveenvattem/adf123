@@ -1,0 +1,13 @@
+{
+	"name": "ls_Json_Api",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://gbfs.citibikenyc.com/gbfs/en/station_information.json",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}

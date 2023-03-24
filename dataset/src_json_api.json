@@ -1,0 +1,13 @@
+{
+	"name": "src_json_api",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_Json_Api",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

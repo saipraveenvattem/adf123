@@ -1,0 +1,19 @@
+{
+	"name": "srccntnrdata",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Ls_blobstorage_source",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "data.txt",
+				"container": "sourceinput"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

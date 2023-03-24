@@ -1,0 +1,126 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "src_json_api",
+						"type": "DatasetReference"
+					},
+					"name": "sourceJsonApi"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "sink_azure_sql",
+						"type": "DatasetReference"
+					},
+					"name": "sink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "flatten1"
+				},
+				{
+					"name": "flatten2"
+				},
+				{
+					"name": "flatten3"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          body as (data as (stations as (capacity as short, eightd_has_key_dispenser as boolean, eightd_station_services as (bikes_availability as string, description as string, docks_availability as string, id as string, link_for_more_info as string, name as string, off_dock_bikes_count as short, off_dock_remaining_bike_capacity as short, schedule_description as string, service_type as string)[], electric_bike_surcharge_waiver as boolean, external_id as string, has_kiosk as boolean, lat as double, legacy_id as short, lon as double, name as string, region_id as short, rental_methods as string[], rental_uris as (android as string, ios as string), short_name as string, station_id as short, station_type as string)[]), last_updated as integer, ttl as short),",
+				"          headers as [string,string]",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     httpMethod: 'GET',",
+				"     timeout: 30,",
+				"     requestInterval: 0,",
+				"     paginationRules: ['supportRFC5988' -> 'true'],",
+				"     responseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> sourceJsonApi",
+				"sourceJsonApi foldDown(unroll(body.data.stations),",
+				"     mapColumn(",
+				"          capacity = body.data.stations.capacity,",
+				"          eightd_has_key_dispenser = body.data.stations.eightd_has_key_dispenser,",
+				"          eightd_station_services = body.data.stations.eightd_station_services,",
+				"          electric_bike_surcharge_waiver = body.data.stations.electric_bike_surcharge_waiver,",
+				"          external_id = body.data.stations.external_id,",
+				"          has_kiosk = body.data.stations.has_kiosk,",
+				"          lat = body.data.stations.lat,",
+				"          legacy_id = body.data.stations.legacy_id,",
+				"          lon = body.data.stations.lon,",
+				"          name = body.data.stations.name,",
+				"          region_id = body.data.stations.region_id,",
+				"          rental_methods = body.data.stations.rental_methods,",
+				"          rental_uris = body.data.stations.rental_uris,",
+				"          short_name = body.data.stations.short_name,",
+				"          station_id = body.data.stations.station_id,",
+				"          station_type = body.data.stations.station_type,",
+				"          last_updated = body.last_updated,",
+				"          ttl = body.ttl",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten1",
+				"flatten1 foldDown(unroll(eightd_station_services),",
+				"     mapColumn(",
+				"          capacity,",
+				"          eightd_has_key_dispenser,",
+				"          eightd_station_services,",
+				"          electric_bike_surcharge_waiver,",
+				"          external_id,",
+				"          has_kiosk,",
+				"          lat,",
+				"          legacy_id,",
+				"          lon,",
+				"          name,",
+				"          region_id,",
+				"          rental_methods,",
+				"          rental_uris,",
+				"          short_name,",
+				"          station_id,",
+				"          station_type,",
+				"          last_updated,",
+				"          ttl",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten2",
+				"flatten2 foldDown(unroll(rental_methods),",
+				"     mapColumn(",
+				"          capacity,",
+				"          eightd_has_key_dispenser,",
+				"          electric_bike_surcharge_waiver,",
+				"          external_id,",
+				"          has_kiosk,",
+				"          lat,",
+				"          legacy_id,",
+				"          lon,",
+				"          name,",
+				"          region_id,",
+				"          short_name,",
+				"          station_id,",
+				"          station_type,",
+				"          last_updated,",
+				"          ttl",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten3",
+				"flatten3 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink"
+			]
+		}
+	}
+}

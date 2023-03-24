@@ -1,0 +1,54 @@
+{
+	"name": "errorcapture",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [
+					{
+						"name": "var1",
+						"value": "1"
+					}
+				],
+				"typeProperties": {
+					"variableName": "var1",
+					"value": {
+						"value": "@int('1')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
+			}
+		],
+		"parameters": {
+			"vr1": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"var1": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-09-22T06:47:30Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

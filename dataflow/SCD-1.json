@@ -1,0 +1,136 @@
+{
+	"name": "SCD-1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "source_csv_blobstorage",
+						"type": "DatasetReference"
+					},
+					"name": "source"
+				},
+				{
+					"dataset": {
+						"referenceName": "dimen_AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "dimeemp"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dimen_AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "Destination"
+				},
+				{
+					"dataset": {
+						"referenceName": "dimen_AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "sinkdest"
+				}
+			],
+			"transformations": [
+				{
+					"name": "doesntexist"
+				},
+				{
+					"name": "exists2"
+				},
+				{
+					"name": "alterRow1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          EmpID as integer,",
+				"          EmpName as string,",
+				"          DOJ as date,",
+				"          {Effective Start Date} as date,",
+				"          EffectiveEndDate as date,",
+				"          Salary as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source",
+				"source(output(",
+				"          EmpID as integer,",
+				"          EmpName as string,",
+				"          DOJ as date,",
+				"          EffectiveStartDate as date,",
+				"          EffectiveEndDatedate as date,",
+				"          Salary as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> dimeemp",
+				"source, dimeemp exists(source@EmpID == dimeemp@EmpID,",
+				"     negate:true,",
+				"     broadcast: 'auto')~> doesntexist",
+				"source, dimeemp exists(source@EmpID == dimeemp@EmpID,",
+				"     negate:false,",
+				"     broadcast: 'auto')~> exists2",
+				"exists2 alterRow(updateIf(true())) ~> alterRow1",
+				"doesntexist sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          EmpID as integer,",
+				"          EmpName as string,",
+				"          DOJ as date,",
+				"          EffectiveStartDate as date,",
+				"          EffectiveEndDatedate as date,",
+				"          Salary as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          EmpID,",
+				"          EmpName,",
+				"          DOJ,",
+				"          EffectiveStartDate = {Effective Start Date},",
+				"          EffectiveEndDatedate = EffectiveEndDate,",
+				"          Salary",
+				"     )) ~> Destination",
+				"alterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          EmpID as integer,",
+				"          EmpName as string,",
+				"          DOJ as date,",
+				"          EffectiveStartDate as date,",
+				"          EffectiveEndDatedate as date,",
+				"          Salary as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['EmpID'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          EmpID,",
+				"          EmpName,",
+				"          DOJ,",
+				"          EffectiveStartDate = {Effective Start Date},",
+				"          EffectiveEndDatedate = EffectiveEndDate,",
+				"          Salary",
+				"     )) ~> sinkdest"
+			]
+		}
+	}
+}

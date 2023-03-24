@@ -1,0 +1,24 @@
+{
+	"name": "trigger_5_30_am_twice_a_day_ist",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "ppl_copy_activities",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 2,
+				"startTime": "2023-03-21T05:30:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}

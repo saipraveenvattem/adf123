@@ -1,0 +1,13 @@
+{
+	"name": "dsonp",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Ls_azure_sql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
