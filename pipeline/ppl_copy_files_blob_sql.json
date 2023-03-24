@@ -91,7 +91,7 @@
 													"type": "AzureBlobStorageReadSettings",
 													"recursive": true,
 													"wildcardFileName": {
-														"value": "@variables('filename')",
+														"value": "@variables('file_name')",
 														"type": "Expression"
 													},
 													"enablePartitionDiscovery": false
@@ -139,7 +139,7 @@
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "filename",
+								"variableName": "file_name",
 								"value": {
 									"value": "@item().name",
 									"type": "Expression"
@@ -155,6 +155,9 @@
 				"type": "String"
 			},
 			"filename": {
+				"type": "String"
+			},
+			"file_name": {
 				"type": "String"
 			}
 		},
