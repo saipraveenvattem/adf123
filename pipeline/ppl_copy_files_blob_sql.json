@@ -54,7 +54,7 @@
 							"type": "IfCondition",
 							"dependsOn": [
 								{
-									"activity": "Set variable1",
+									"activity": "get_filenames",
 									"dependencyConditions": [
 										"Completed"
 									]
@@ -129,7 +129,7 @@
 							}
 						},
 						{
-							"name": "Set variable1",
+							"name": "get_filenames",
 							"type": "SetVariable",
 							"dependsOn": [],
 							"userProperties": [],
