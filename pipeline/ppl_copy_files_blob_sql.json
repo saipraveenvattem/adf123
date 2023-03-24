@@ -78,12 +78,7 @@
 											"secureOutput": false,
 											"secureInput": false
 										},
-										"userProperties": [
-											{
-												"name": "filename",
-												"value": "default"
-											}
-										],
+										"userProperties": [],
 										"typeProperties": {
 											"source": {
 												"type": "DelimitedTextSource",
