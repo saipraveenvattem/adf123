@@ -52,7 +52,14 @@
 						{
 							"name": "If Condition1",
 							"type": "IfCondition",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "Set variable1",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
@@ -84,7 +91,7 @@
 													"type": "AzureBlobStorageReadSettings",
 													"recursive": true,
 													"wildcardFileName": {
-														"value": "@activity('getfilenames').output.itemName",
+														"value": "@variables('filename')",
 														"type": "Expression"
 													},
 													"enablePartitionDiscovery": false
@@ -125,11 +132,32 @@
 									}
 								]
 							}
+						},
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "filename",
+								"value": {
+									"value": "item()name",
+									"type": "Expression"
+								}
+							}
 						}
 					]
 				}
 			}
 		],
+		"variables": {
+			"Filename": {
+				"type": "String"
+			},
+			"filename": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
