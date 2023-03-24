@@ -376,7 +376,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('getfilenames').output.childItems",
+						"value": "@activity('getfilenames_copy2').output.childItems",
 						"type": "Expression"
 					},
 					"activities": [
@@ -407,12 +407,12 @@
 							"userProperties": [],
 							"typeProperties": {
 								"on": {
-									"value": "@item().name",
+									"value": "@split(item().name,'.')[0]",
 									"type": "Expression"
 								},
 								"cases": [
 									{
-										"value": "source.csv",
+										"value": "source",
 										"activities": [
 											{
 												"name": "Copy data2",
@@ -543,7 +543,7 @@
 										]
 									},
 									{
-										"value": "split.csv",
+										"value": "split",
 										"activities": [
 											{
 												"name": "Copy data3",
