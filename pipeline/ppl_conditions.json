@@ -445,11 +445,81 @@
 													"sink": {
 														"type": "AzureSqlSink",
 														"writeBehavior": "insert",
-														"sqlWriterUseTableLock": false
+														"sqlWriterUseTableLock": false,
+														"tableOption": "autoCreate",
+														"disableMetricsCollection": false
 													},
 													"enableStaging": false,
 													"translator": {
 														"type": "TabularTranslator",
+														"mappings": [
+															{
+																"source": {
+																	"type": "String",
+																	"ordinal": 1
+																},
+																"sink": {
+																	"name": "Column1",
+																	"type": "String",
+																	"physicalType": "String"
+																}
+															},
+															{
+																"source": {
+																	"type": "String",
+																	"ordinal": 2
+																},
+																"sink": {
+																	"name": "Column2",
+																	"type": "String",
+																	"physicalType": "String"
+																}
+															},
+															{
+																"source": {
+																	"type": "String",
+																	"ordinal": 3
+																},
+																"sink": {
+																	"name": "Column3",
+																	"type": "String",
+																	"physicalType": "String"
+																}
+															},
+															{
+																"source": {
+																	"type": "String",
+																	"ordinal": 4
+																},
+																"sink": {
+																	"name": "Column4",
+																	"type": "String",
+																	"physicalType": "String"
+																}
+															},
+															{
+																"source": {
+																	"type": "String",
+																	"ordinal": 5
+																},
+																"sink": {
+																	"name": "Column5",
+																	"type": "String",
+																	"physicalType": "String"
+																}
+															},
+															{
+																"source": {
+																	"type": "String",
+																	"ordinal": 6
+																},
+																"sink": {
+																	"name": "Column6",
+																	"type": "String",
+																	"physicalType": "String"
+																}
+															}
+														],
 														"typeConversion": true,
 														"typeConversionSettings": {
 															"allowDataTruncation": true,
