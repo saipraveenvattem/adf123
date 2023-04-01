@@ -33,10 +33,7 @@
 				"DataFlowSource select(mapColumn(",
 				"          Employee_ID = EmpID,",
 				"          Employee_Name = EmpName,",
-				"          Date_Of_Joining = DOJ,",
-				"          {Effective Start Date},",
-				"          EffectiveEndDate,",
-				"          Salary",
+				"          DOJ",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectTable1Columns"
