@@ -1,0 +1,98 @@
+{
+	"name": "CopyDatafromBBtoDB",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_blob_source_csv",
+						"type": "DatasetReference"
+					},
+					"name": "DataFlowSource"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_Sqlserver_dbo_source",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "SelectTable1Columns"
+				},
+				{
+					"name": "SelectTable2Columns"
+				},
+				{
+					"name": "JoinTable1Table2"
+				},
+				{
+					"name": "RemoveEmp1ofTable2"
+				},
+				{
+					"name": "AddNewSalary"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          EmpID as integer,",
+				"          EmpName as string,",
+				"          DOJ as date,",
+				"          {Effective Start Date} as date,",
+				"          EffectiveEndDate as date,",
+				"          Salary as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> DataFlowSource",
+				"DataFlowSource select(mapColumn(",
+				"          EmpID,",
+				"          EmpName,",
+				"          DOJ",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectTable1Columns",
+				"DataFlowSource select(mapColumn(",
+				"          EmpID,",
+				"          {Effective Start Date},",
+				"          EffectiveEndDate,",
+				"          Salary",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectTable2Columns",
+				"SelectTable1Columns, SelectTable2Columns join(SelectTable1Columns@EmpID == SelectTable2Columns@EmpID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JoinTable1Table2",
+				"JoinTable1Table2 select(mapColumn(",
+				"          EmpID = SelectTable1Columns@EmpID,",
+				"          EmpName,",
+				"          DOJ,",
+				"          {Effective Start Date},",
+				"          EffectiveEndDate,",
+				"          Salary",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> RemoveEmp1ofTable2",
+				"RemoveEmp1ofTable2 derive({New Salary} = floor(iif(greater(Salary, 999), multiply(Salary,1.1), multiply(Salary,1.2))),",
+				"          UpdatedDate = currentDate('IST')) ~> AddNewSalary",
+				"AddNewSalary sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}
