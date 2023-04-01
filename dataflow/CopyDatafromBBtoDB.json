@@ -1,0 +1,46 @@
+{
+	"name": "CopyDatafromBBtoDB",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_blob_source_csv",
+						"type": "DatasetReference"
+					},
+					"name": "DataFlowSource"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          EmpID as integer,",
+				"          EmpName as string,",
+				"          DOJ as date,",
+				"          {Effective Start Date} as date,",
+				"          EffectiveEndDate as date,",
+				"          Salary as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> DataFlowSource",
+				"DataFlowSource select(mapColumn(",
+				"          Employee_ID = EmpID,",
+				"          Employee_Name = EmpName,",
+				"          Date_Of_Joining = DOJ,",
+				"          {Effective Start Date},",
+				"          EffectiveEndDate,",
+				"          Salary",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1"
+			]
+		}
+	}
+}
