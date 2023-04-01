@@ -22,6 +22,9 @@
 				},
 				{
 					"name": "JoinTable1Table2"
+				},
+				{
+					"name": "RemoveEmp1ofTable2"
 				}
 			],
 			"scriptLines": [
@@ -37,25 +40,35 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> DataFlowSource",
 				"DataFlowSource select(mapColumn(",
-				"          Employee_ID,",
-				"          Employee_Name = EmpName,",
+				"          EmpID,",
+				"          EmpName,",
 				"          DOJ",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectTable1Columns",
 				"DataFlowSource select(mapColumn(",
-				"          Employee_ID = EmpID,",
+				"          EmpID,",
 				"          {Effective Start Date},",
 				"          EffectiveEndDate,",
 				"          Salary",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SelectTable2Columns",
-				"SelectTable1Columns, SelectTable2Columns join(SelectTable1Columns@Employee_ID == SelectTable2Columns@Employee_ID,",
+				"SelectTable1Columns, SelectTable2Columns join(SelectTable1Columns@EmpID == SelectTable2Columns@EmpID,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> JoinTable1Table2"
+				"     broadcast: 'auto')~> JoinTable1Table2",
+				"JoinTable1Table2 select(mapColumn(",
+				"          EmpID = SelectTable1Columns@EmpID,",
+				"          EmpName,",
+				"          DOJ,",
+				"          {Effective Start Date},",
+				"          EffectiveEndDate,",
+				"          Salary",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> RemoveEmp1ofTable2"
 			]
 		}
 	}
