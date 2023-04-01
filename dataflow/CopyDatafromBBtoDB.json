@@ -15,7 +15,7 @@
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "select1"
+					"name": "SelectTable1Columns"
 				}
 			],
 			"scriptLines": [
@@ -39,7 +39,7 @@
 				"          Salary",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1"
+				"     skipDuplicateMapOutputs: true) ~> SelectTable1Columns"
 			]
 		}
 	}
