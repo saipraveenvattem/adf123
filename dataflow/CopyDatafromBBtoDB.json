@@ -25,6 +25,9 @@
 				},
 				{
 					"name": "RemoveEmp1ofTable2"
+				},
+				{
+					"name": "AddNewSalary"
 				}
 			],
 			"scriptLines": [
@@ -68,7 +71,8 @@
 				"          Salary",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> RemoveEmp1ofTable2"
+				"     skipDuplicateMapOutputs: true) ~> RemoveEmp1ofTable2",
+				"RemoveEmp1ofTable2 derive({New Salary} = floor(iif(greater(Salary, 999), multiply(Salary,1.1), multiply(Salary,1.2)))) ~> AddNewSalary"
 			]
 		}
 	}
