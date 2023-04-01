@@ -12,7 +12,15 @@
 					"name": "DataFlowSource"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_Sqlserver_dbo_source",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "SelectTable1Columns"
@@ -72,7 +80,17 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> RemoveEmp1ofTable2",
-				"RemoveEmp1ofTable2 derive({New Salary} = floor(iif(greater(Salary, 999), multiply(Salary,1.1), multiply(Salary,1.2)))) ~> AddNewSalary"
+				"RemoveEmp1ofTable2 derive({New Salary} = floor(iif(greater(Salary, 999), multiply(Salary,1.1), multiply(Salary,1.2)))) ~> AddNewSalary",
+				"AddNewSalary sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}
