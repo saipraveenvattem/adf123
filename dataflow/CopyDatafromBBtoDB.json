@@ -16,6 +16,12 @@
 			"transformations": [
 				{
 					"name": "SelectTable1Columns"
+				},
+				{
+					"name": "SelectTable2Columns"
+				},
+				{
+					"name": "JoinTable1Table2"
 				}
 			],
 			"scriptLines": [
@@ -31,12 +37,25 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> DataFlowSource",
 				"DataFlowSource select(mapColumn(",
-				"          Employee_ID = EmpID,",
+				"          Employee_ID,",
 				"          Employee_Name = EmpName,",
 				"          DOJ",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> SelectTable1Columns"
+				"     skipDuplicateMapOutputs: true) ~> SelectTable1Columns",
+				"DataFlowSource select(mapColumn(",
+				"          Employee_ID = EmpID,",
+				"          {Effective Start Date},",
+				"          EffectiveEndDate,",
+				"          Salary",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectTable2Columns",
+				"SelectTable1Columns, SelectTable2Columns join(SelectTable1Columns@Employee_ID == SelectTable2Columns@Employee_ID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JoinTable1Table2"
 			]
 		}
 	}
