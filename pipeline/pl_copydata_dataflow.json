@@ -102,7 +102,10 @@
 														"type": "DataFlowReference",
 														"datasetParameters": {
 															"source1": {
-																"filename": "source.csv"
+																"filename": {
+																	"value": "@variables('singlefilename')",
+																	"type": "Expression"
+																}
 															},
 															"sink1": {
 																"tableschema": "dbo",
