@@ -33,7 +33,7 @@
 				}
 			},
 			{
-				"name": "ForEach1_copy1",
+				"name": "ForEach",
 				"type": "ForEach",
 				"dependsOn": [
 					{
