@@ -51,7 +51,7 @@
 					},
 					"activities": [
 						{
-							"name": "get_filenames_copy1",
+							"name": "get_filenames",
 							"type": "SetVariable",
 							"dependsOn": [],
 							"userProperties": [],
@@ -68,7 +68,7 @@
 							"type": "Switch",
 							"dependsOn": [
 								{
-									"activity": "get_filenames_copy1",
+									"activity": "get_filenames",
 									"dependencyConditions": [
 										"Completed"
 									]
