@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "getfilenames_copy2",
+				"name": "getfilenames",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
@@ -37,7 +37,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "getfilenames_copy2",
+						"activity": "getfilenames",
 						"dependencyConditions": [
 							"Completed"
 						]
