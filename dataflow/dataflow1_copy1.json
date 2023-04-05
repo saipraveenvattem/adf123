@@ -44,7 +44,15 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          EmpID,",
+				"          EmpName,",
+				"          DOJ,",
+				"          {Effective Start Date},",
+				"          EffectiveEndDate,",
+				"          Salary",
+				"     )) ~> sink1"
 			]
 		}
 	}
