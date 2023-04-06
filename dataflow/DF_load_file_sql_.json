@@ -37,6 +37,7 @@
 				"     insertable:true,",
 				"     updateable:false,",
 				"     upsertable:false,",
+				"     recreate:true,",
 				"     format: 'table',",
 				"     preSQLs:['truncate table dbo.split_test'],",
 				"     skipDuplicateMapInputs: true,",
