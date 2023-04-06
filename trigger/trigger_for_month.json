@@ -6,7 +6,7 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "pl_copydata_dataflow_copy1",
+					"referenceName": "pl_copydata_dataflow",
 					"type": "PipelineReference"
 				}
 			}
