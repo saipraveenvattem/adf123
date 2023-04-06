@@ -103,7 +103,7 @@
 														"datasetParameters": {
 															"source1": {
 																"filename": {
-																	"value": "source.csv",
+																	"value": "@variables('singlefilename')",
 																	"type": "Expression"
 																}
 															},
