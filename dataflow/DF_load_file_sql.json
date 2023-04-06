@@ -40,7 +40,6 @@
 				"     insertable:true,",
 				"     updateable:false,",
 				"     upsertable:false,",
-				"     recreate:true,",
 				"     format: 'table',",
 				"     preSQLs:['truncate table dbo.source_test'],",
 				"     skipDuplicateMapInputs: true,",
