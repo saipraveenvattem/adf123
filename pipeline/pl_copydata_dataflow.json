@@ -1,5 +1,5 @@
 {
-	"name": "pl_copydata_dataflow_copy1",
+	"name": "pl_copydata_dataflow",
 	"properties": {
 		"activities": [
 			{
