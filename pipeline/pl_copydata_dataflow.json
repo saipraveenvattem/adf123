@@ -99,7 +99,19 @@
 												"typeProperties": {
 													"dataflow": {
 														"referenceName": "DF_load_file_sql",
-														"type": "DataFlowReference"
+														"type": "DataFlowReference",
+														"datasetParameters": {
+															"source1": {
+																"filename": {
+																	"value": "@variables('singlefilename')",
+																	"type": "Expression"
+																}
+															},
+															"sink1": {
+																"tableschema": "dbo",
+																"tablename": "source_test"
+															}
+														}
 													},
 													"compute": {
 														"coreCount": 8,
